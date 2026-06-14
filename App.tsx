@@ -1,5 +1,6 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { getLocales } from 'expo-localization';
 import * as WebBrowser from 'expo-web-browser';
 import { StatusBar } from 'expo-status-bar';
 import { useMemo } from 'react';
@@ -18,12 +19,14 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PrimaryButton } from './src/components/PrimaryButton';
 import { SpecialistListError } from './src/components/SpecialistListError';
 import { SpecialistCard } from './src/components/SpecialistCard';
-import { links } from './src/constants/links';
+import { getWhatsappUrl, links } from './src/constants/links';
 import { useSpecialists } from './src/hooks/useSpecialists';
+import type { Locale } from './src/shared/i18n/translation';
 import { theme } from './theme';
 
 const heroImage = require('./assets/hero.png') as ImageSourcePropType;
 const leftAccessoryImage = require('./assets/left-accessory.png') as ImageSourcePropType;
+const locale: Locale = getLocales()[0]?.languageCode === 'zh' ? 'zh' : 'en';
 
 const queryClient = new QueryClient();
 
@@ -51,7 +54,7 @@ function PremiumConsultationScreen() {
 
   const handleWhatsappPress = async () => {
     try {
-      await Linking.openURL(links.whatsappUrl);
+      await Linking.openURL(getWhatsappUrl(locale));
     } catch {
       Alert.alert('Unable to open WhatsApp');
     }
