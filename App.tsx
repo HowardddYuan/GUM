@@ -1,26 +1,61 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import * as WebBrowser from 'expo-web-browser';
 import { StatusBar } from 'expo-status-bar';
 import { useMemo } from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   ImageSourcePropType,
+  Linking,
+  ActivityIndicator,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PrimaryButton } from './src/components/PrimaryButton';
+import { SpecialistListError } from './src/components/SpecialistListError';
 import { SpecialistCard } from './src/components/SpecialistCard';
+import { links } from './src/constants/links';
+import { useSpecialists } from './src/hooks/useSpecialists';
 import { theme } from './theme';
 
 const heroImage = require('./assets/hero.png') as ImageSourcePropType;
 const leftAccessoryImage = require('./assets/left-accessory.png') as ImageSourcePropType;
 
-const specialists = ['Kan Chung', 'Alisa Mak', 'Justin Liu'];
+const queryClient = new QueryClient();
 
 export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <PremiumConsultationScreen />
+    </QueryClientProvider>
+  );
+}
+
+function PremiumConsultationScreen() {
   const bottomSheetSnapPoints = useMemo(() => ['27%'], []);
+  const specialistsQuery = useSpecialists();
+
+  const specialists = specialistsQuery.data ?? [];
+
+  const handleBookAppointmentPress = async () => {
+    try {
+      await WebBrowser.openBrowserAsync(links.bookingUrl);
+    } catch {
+      Alert.alert('Unable to open booking page');
+    }
+  };
+
+  const handleWhatsappPress = async () => {
+    try {
+      await Linking.openURL(links.whatsappUrl);
+    } catch {
+      Alert.alert('Unable to open WhatsApp');
+    }
+  };
 
   return (
     <GestureHandlerRootView style={styles.screen}>
@@ -34,11 +69,25 @@ export default function App() {
       <View style={styles.contentPanel}>
         <FlatList
           data={specialists}
-          renderItem={({ item }) => <SpecialistCard name={item} />}
-          keyExtractor={(item) => item}
+          renderItem={({ item }) => <SpecialistCard name={item.name} />}
+          keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContent}
           ItemSeparatorComponent={() => <View style={styles.specialistGap} />}
+          ListEmptyComponent={
+            specialistsQuery.isLoading ? (
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator color={theme.colors.text.primary} />
+                <Text style={styles.loadingText}>Loading specialists...</Text>
+              </View>
+            ) : specialistsQuery.isError ? (
+              <SpecialistListError
+                onRetry={() => {
+                  void specialistsQuery.refetch();
+                }}
+              />
+            ) : null
+          }
           ListHeaderComponent={
             <View style={styles.listHeader}>
               <Text style={styles.eyebrow}>Got more questions?</Text>
@@ -99,8 +148,11 @@ export default function App() {
             Saturday, Sunday & Public Holidays: Closed
           </Text>
 
-          <PrimaryButton label="Book appointment" />
-          <PrimaryButton label="WhatsApp us" />
+          <PrimaryButton
+            label="Book appointment"
+            onPress={handleBookAppointmentPress}
+          />
+          <PrimaryButton label="WhatsApp us" onPress={handleWhatsappPress} />
         </BottomSheetView>
       </BottomSheet>
     </GestureHandlerRootView>
@@ -163,6 +215,15 @@ const styles = StyleSheet.create({
   },
   specialistGap: {
     height: theme.spacing.xl,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    paddingVertical: theme.spacing.xxxl,
+  },
+  loadingText: {
+    ...theme.typography.body,
+    color: theme.colors.text.secondary,
+    marginTop: theme.spacing.md,
   },
   contactBlock: {
     marginTop: theme.spacing.section,
