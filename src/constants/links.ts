@@ -3,6 +3,8 @@ import { translations } from '../shared/i18n/translation';
 
 export const links = {
   bookingUrl: 'https://gainmiles.simplybook.asia/v2/',
+  contactPhoneUrl: 'tel:+85228934402',
+  contactEmailUrl: 'mailto:memberservice@gumhk.com',
   whatsappPhoneNumber: '85260300900',
 } as const;
 

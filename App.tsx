@@ -44,7 +44,7 @@ function PremiumConsultationScreen() {
 
   const specialists = specialistsQuery.data ?? [];
 
-  const handleBookAppointmentPress = async () => {
+  const openBookingInApp = async () => {
     try {
       await WebBrowser.openBrowserAsync(links.bookingUrl);
     } catch {
@@ -52,11 +52,53 @@ function PremiumConsultationScreen() {
     }
   };
 
+  const openBookingExternally = async () => {
+    try {
+      await Linking.openURL(links.bookingUrl);
+    } catch {
+      Alert.alert('Unable to open booking page');
+    }
+  };
+
+  const handleBookAppointmentPress = () => {
+    Alert.alert('Book appointment', 'Choose how to open the booking page.', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Open in app',
+        onPress: () => {
+          void openBookingInApp();
+        },
+      },
+      {
+        text: 'Open externally',
+        onPress: () => {
+          void openBookingExternally();
+        },
+      },
+    ]);
+  };
+
   const handleWhatsappPress = async () => {
     try {
       await Linking.openURL(getWhatsappUrl(locale));
     } catch {
       Alert.alert('Unable to open WhatsApp');
+    }
+  };
+
+  const handlePhonePress = async () => {
+    try {
+      await Linking.openURL(links.contactPhoneUrl);
+    } catch {
+      Alert.alert('Unable to open dialer');
+    }
+  };
+
+  const handleEmailPress = async () => {
+    try {
+      await Linking.openURL(links.contactEmailUrl);
+    } catch {
+      Alert.alert('Unable to open mail app');
     }
   };
 
@@ -109,11 +151,16 @@ function PremiumConsultationScreen() {
                   using the method below:
                 </Text>
                 <Text style={styles.contactText}>
-                  Hotline: <Text style={styles.linkText}>+852 2893 4402</Text>
+                  Hotline:{' '}
+                  <Text style={styles.linkText} onPress={handlePhonePress}>
+                    +852 2893 4402
+                  </Text>
                 </Text>
                 <Text style={styles.contactText}>
                   Email address:{' '}
-                  <Text style={styles.linkText}>memberservice@gumhk.com</Text>
+                  <Text style={styles.linkText} onPress={handleEmailPress}>
+                    memberservice@gumhk.com
+                  </Text>
                 </Text>
               </View>
 
