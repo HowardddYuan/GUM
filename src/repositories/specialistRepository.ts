@@ -1,3 +1,5 @@
+import { specialistMockConfig } from '../config/specialistMockConfig';
+
 export type Specialist = {
   id: string;
   name: string;
@@ -21,7 +23,12 @@ function wait(durationMs: number) {
 
 export const hardcodedSpecialistRepository: SpecialistRepository = {
   async listSpecialists() {
-    await wait(350);
+    await wait(specialistMockConfig.delayMs);
+
+    if (specialistMockConfig.shouldFail) {
+      throw new Error('Unable to load specialists');
+    }
+
     return specialists;
   },
 };

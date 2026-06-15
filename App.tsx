@@ -21,7 +21,7 @@ import { SpecialistListError } from './src/components/SpecialistListError';
 import { SpecialistCard } from './src/components/SpecialistCard';
 import { getWhatsappUrl, links } from './src/constants/links';
 import { useSpecialists } from './src/hooks/useSpecialists';
-import type { Locale } from './src/shared/i18n/translation';
+import { translations, type Locale } from './src/shared/i18n/translation';
 import { theme } from './theme';
 
 const heroImage = require('./assets/hero.png') as ImageSourcePropType;
@@ -41,6 +41,7 @@ export default function App() {
 function PremiumConsultationScreen() {
   const bottomSheetSnapPoints = useMemo(() => ['27%'], []);
   const specialistsQuery = useSpecialists();
+  const copy = translations[locale].premiumConsultation;
 
   const specialists = specialistsQuery.data ?? [];
 
@@ -123,10 +124,13 @@ function PremiumConsultationScreen() {
             specialistsQuery.isLoading ? (
               <View style={styles.loadingContainer}>
                 <ActivityIndicator color={theme.colors.text.primary} />
-                <Text style={styles.loadingText}>Loading specialists...</Text>
+                <Text style={styles.loadingText}>
+                  {copy.specialists.loading}
+                </Text>
               </View>
             ) : specialistsQuery.isError ? (
               <SpecialistListError
+                locale={locale}
                 onRetry={() => {
                   void specialistsQuery.refetch();
                 }}
@@ -135,31 +139,25 @@ function PremiumConsultationScreen() {
           }
           ListHeaderComponent={
             <View style={styles.listHeader}>
-              <Text style={styles.eyebrow}>Got more questions?</Text>
-              <Text style={styles.title}>GUM Specialists are here!</Text>
-              <Text style={styles.subtitle}>
-                We provide professional, impartial advice to help you find
-                what's best for you
-              </Text>
+              <Text style={styles.eyebrow}>{copy.titleLine1}</Text>
+              <Text style={styles.title}>{copy.titleLine2}</Text>
+              <Text style={styles.subtitle}>{copy.subtitle}</Text>
             </View>
           }
           ListFooterComponent={
             <View>
               <View style={styles.contactBlock}>
+                <Text style={styles.contactText}>{copy.contact.description}</Text>
                 <Text style={styles.contactText}>
-                  For general enquiries, please feel free to reach out to us
-                  using the method below:
-                </Text>
-                <Text style={styles.contactText}>
-                  Hotline:{' '}
+                  {copy.contact.hotlineLabel}{' '}
                   <Text style={styles.linkText} onPress={handlePhonePress}>
-                    +852 2893 4402
+                    {copy.contact.hotline}
                   </Text>
                 </Text>
                 <Text style={styles.contactText}>
-                  Email address:{' '}
+                  {copy.contact.emailLabel}{' '}
                   <Text style={styles.linkText} onPress={handleEmailPress}>
-                    memberservice@gumhk.com
+                    {copy.contact.email}
                   </Text>
                 </Text>
               </View>
@@ -168,11 +166,7 @@ function PremiumConsultationScreen() {
                 <View style={styles.infoIcon}>
                   <Text style={styles.infoIconText}>i</Text>
                 </View>
-                <Text style={styles.agreementText}>
-                  Your use of our appointment service or communication via
-                  WhatsApp constitutes your agreement to our collection and use
-                  of personal data as outlined in our privacy policy.
-                </Text>
+                <Text style={styles.agreementText}>{copy.agreement}</Text>
               </View>
             </View>
           }
@@ -190,19 +184,18 @@ function PremiumConsultationScreen() {
         backgroundStyle={styles.bottomSheetBackground}
       >
         <BottomSheetView style={styles.bottomSheetContent}>
-          <Text style={styles.serviceHoursTitle}>Service Hours:</Text>
-          <Text style={styles.serviceHoursText}>
-            Monday - Friday: 9:30am - 5:30pm
-          </Text>
-          <Text style={styles.serviceHoursText}>
-            Saturday, Sunday & Public Holidays: Closed
-          </Text>
+          <Text style={styles.serviceHoursTitle}>{copy.serviceHours.title}</Text>
+          <Text style={styles.serviceHoursText}>{copy.serviceHours.weekday}</Text>
+          <Text style={styles.serviceHoursText}>{copy.serviceHours.holiday}</Text>
 
           <PrimaryButton
-            label="Book appointment"
+            label={copy.actions.bookAppointment}
             onPress={handleBookAppointmentPress}
           />
-          <PrimaryButton label="WhatsApp us" onPress={handleWhatsappPress} />
+          <PrimaryButton
+            label={copy.actions.whatsappUs}
+            onPress={handleWhatsappPress}
+          />
         </BottomSheetView>
       </BottomSheet>
     </GestureHandlerRootView>

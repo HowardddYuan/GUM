@@ -1,22 +1,28 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { theme } from '../../theme';
+import type { Locale } from '../shared/i18n/translation';
+import { translations } from '../shared/i18n/translation';
 import { PrimaryButton } from './PrimaryButton';
 
 type SpecialistListErrorProps = {
+  locale: Locale;
   onRetry: () => void;
 };
 
-export function SpecialistListError({ onRetry }: SpecialistListErrorProps) {
+export function SpecialistListError({
+  locale,
+  onRetry,
+}: SpecialistListErrorProps) {
+  const copy = translations[locale].premiumConsultation;
+
   return (
     <View style={styles.container}>
       <View style={styles.icon}>
         <Text style={styles.iconText}>i</Text>
       </View>
       <Text style={styles.title}>Oops!</Text>
-      <Text style={styles.message}>
-        Oops! Something went wrong. Please close the app and try again.
-      </Text>
-      <PrimaryButton label="Retry" onPress={onRetry} />
+      <Text style={styles.message}>{copy.specialists.error}</Text>
+      <PrimaryButton label={copy.specialists.retry} onPress={onRetry} />
     </View>
   );
 }
