@@ -32,9 +32,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.avatarPlaceholder,
   },
   name: {
+    ...theme.typography.specialistName,
     color: theme.colors.text.muted,
-    fontSize: 13,
-    fontWeight: '700',
     marginLeft: 26,
   },
 });

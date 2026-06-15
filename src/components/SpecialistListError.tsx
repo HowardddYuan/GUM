@@ -43,14 +43,12 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.lg,
   },
   iconText: {
+    ...theme.typography.errorIcon,
     color: theme.colors.text.inverse,
-    fontSize: 28,
-    fontWeight: '800',
   },
   title: {
+    ...theme.typography.errorTitle,
     color: theme.colors.text.primary,
-    fontSize: 18,
-    fontWeight: '800',
     marginBottom: theme.spacing.md,
   },
   message: {

@@ -1,4 +1,10 @@
+const fonts = {
+  inter: 'Inter',
+  notoSansTC: 'Noto Sans TC',
+} as const;
+
 export const theme = {
+  fonts,
   colors: {
     background: '#f4f4f4',
     heroBackground: '#d7c78f',
@@ -43,31 +49,64 @@ export const theme = {
   },
   typography: {
     eyebrow: {
+      fontFamily: fonts.inter,
       fontSize: 12,
       fontWeight: '700',
     },
     title: {
-      fontFamily: 'Noto Sans TC',
+      fontFamily: fonts.notoSansTC,
       fontSize: 22,
       lineHeight: 33,
       letterSpacing: 0,
       fontWeight: '700',
     },
     body: {
+      fontFamily: fonts.inter,
       fontSize: 12,
       lineHeight: 17,
     },
     caption: {
+      fontFamily: fonts.inter,
       fontSize: 10,
       lineHeight: 14,
     },
     legal: {
+      fontFamily: fonts.inter,
       fontSize: 11,
       lineHeight: 17,
     },
     button: {
+      fontFamily: fonts.inter,
       fontSize: 14,
       fontWeight: '800',
+    },
+    link: {
+      fontFamily: fonts.inter,
+      fontWeight: '600',
+    },
+    specialistName: {
+      fontFamily: fonts.inter,
+      fontSize: 13,
+      fontWeight: '700',
+    },
+    errorIcon: {
+      fontFamily: fonts.inter,
+      fontSize: 28,
+      fontWeight: '800',
+    },
+    errorTitle: {
+      fontFamily: fonts.inter,
+      fontSize: 18,
+      fontWeight: '800',
+    },
+    infoIcon: {
+      fontFamily: fonts.inter,
+      fontSize: 11,
+      fontWeight: '800',
+    },
+    serviceHoursTitle: {
+      fontFamily: fonts.inter,
+      fontSize: 11,
     },
   },
   sizes: {
