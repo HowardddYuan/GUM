@@ -1,0 +1,137 @@
+const fonts = {
+  inter: 'Inter',
+  notoSansTC: 'Noto Sans TC',
+} as const;
+
+export const theme = {
+  fonts,
+  colors: {
+    background: '#f4f4f4',
+    heroBackground: '#d7c78f',
+    surface: '#ffffff',
+    text: {
+      primary: '#303030',
+      secondary: '#333333',
+      muted: '#414141',
+      dark: '#1b1b1b',
+      inverse: '#ffffff',
+    },
+    link: '#0185ff',
+    avatarPlaceholder: '#a7a7a7',
+    warning: {
+      background: '#fff7da',
+      border: '#f0c14b',
+      icon: '#ffc928',
+    },
+    action: '#000000',
+    shadow: '#000000',
+  },
+  spacing: {
+    xxs: 4,
+    xs: 8,
+    sm: 10,
+    md: 12,
+    lg: 16,
+    xl: 18,
+    xxl: 20,
+    xxxl: 24,
+    page: 28,
+    section: 34,
+  },
+  radii: {
+    sm: 5,
+    md: 6,
+    lg: 8,
+    button: 9,
+    footer: 18,
+    panel: 28,
+    pill: 999,
+  },
+  typography: {
+    eyebrow: {
+      fontFamily: fonts.inter,
+      fontSize: 12,
+      fontWeight: '700',
+    },
+    title: {
+      fontFamily: fonts.notoSansTC,
+      fontSize: 22,
+      lineHeight: 33,
+      letterSpacing: 0,
+      fontWeight: '700',
+    },
+    body: {
+      fontFamily: fonts.inter,
+      fontSize: 12,
+      lineHeight: 17,
+    },
+    caption: {
+      fontFamily: fonts.inter,
+      fontSize: 10,
+      lineHeight: 14,
+    },
+    legal: {
+      fontFamily: fonts.inter,
+      fontSize: 11,
+      lineHeight: 17,
+    },
+    button: {
+      fontFamily: fonts.inter,
+      fontSize: 14,
+      fontWeight: '800',
+    },
+    link: {
+      fontFamily: fonts.inter,
+      fontWeight: '600',
+    },
+    specialistName: {
+      fontFamily: fonts.inter,
+      fontSize: 13,
+      fontWeight: '700',
+    },
+    errorIcon: {
+      fontFamily: fonts.inter,
+      fontSize: 28,
+      fontWeight: '800',
+    },
+    errorTitle: {
+      fontFamily: fonts.inter,
+      fontSize: 18,
+      fontWeight: '800',
+    },
+    infoIcon: {
+      fontFamily: fonts.inter,
+      fontSize: 11,
+      fontWeight: '800',
+    },
+    serviceHoursTitle: {
+      fontFamily: fonts.inter,
+      fontSize: 11,
+    },
+  },
+  sizes: {
+    heroHeight: 272,
+    backAccessoryWidth: 52,
+    backAccessoryHeight: 40,
+    specialistCardHeight: 104,
+    avatar: 72,
+    icon: 16,
+    buttonHeight: 54,
+    footerPaddingBottom: 32,
+    scrollBottomInset: 274,
+  },
+  shadows: {
+    card: {
+      shadowOffset: { width: 0, height: 5 },
+      shadowOpacity: 0.1,
+      shadowRadius: 10,
+      elevation: 3,
+    },
+    footer: {
+      shadowOffset: { width: 0, height: -6 },
+      shadowOpacity: 0.06,
+      shadowRadius: 14,
+      elevation: 8,
+    },
+  },
+} as const;
