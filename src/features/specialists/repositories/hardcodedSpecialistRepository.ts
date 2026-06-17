@@ -1,13 +1,6 @@
-import { specialistMockConfig } from '../config/specialistMockConfig';
-
-export interface Specialist {
-  id: string;
-  name: string;
-}
-
-export interface SpecialistRepository {
-  listSpecialists(): Promise<Specialist[]>;
-}
+import { specialistMockConfig } from '../../../config/specialistMockConfig';
+import type { SpecialistRepository } from './SpecialistRepository';
+import type { Specialist } from '../types/Specialist';
 
 const specialists: Specialist[] = [
   { id: 'kan-chung', name: 'Kan Chung' },

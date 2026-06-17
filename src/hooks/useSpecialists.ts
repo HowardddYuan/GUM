@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { hardcodedSpecialistRepository } from '../repositories/specialistRepository';
+import { specialistRepository } from '../features/specialists/repositories';
 
 export function useSpecialists() {
   return useQuery({
     queryKey: ['specialists'],
-    queryFn: () => hardcodedSpecialistRepository.listSpecialists(),
+    queryFn: () => specialistRepository.listSpecialists(),
     retry: false,
   });
 }
