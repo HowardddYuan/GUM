@@ -1,28 +1,29 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { theme } from '../../theme';
-import type { Locale } from '../shared/i18n/translation';
-import { translations } from '../shared/i18n/translation';
 import { PrimaryButton } from './PrimaryButton';
 
-type SpecialistListErrorProps = {
-  locale: Locale;
+interface SpecialistListErrorCopy {
+  error: string;
+  retry: string;
+}
+
+interface SpecialistListErrorProps {
+  copy: SpecialistListErrorCopy;
   onRetry: () => void;
-};
+}
 
 export function SpecialistListError({
-  locale,
+  copy,
   onRetry,
 }: SpecialistListErrorProps) {
-  const copy = translations[locale].premiumConsultation;
-
   return (
     <View style={styles.container}>
       <View style={styles.icon}>
         <Text style={styles.iconText}>i</Text>
       </View>
       <Text style={styles.title}>Oops!</Text>
-      <Text style={styles.message}>{copy.specialists.error}</Text>
-      <PrimaryButton label={copy.specialists.retry} onPress={onRetry} />
+      <Text style={styles.message}>{copy.error}</Text>
+      <PrimaryButton label={copy.retry} onPress={onRetry} />
     </View>
   );
 }

@@ -14,6 +14,7 @@ import {
   View,
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { ContactBlock, type ContactCopy } from '../components/ContactBlock';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { SpecialistCard } from '../components/SpecialistCard';
 import { SpecialistListError } from '../components/SpecialistListError';
@@ -27,9 +28,9 @@ const leftAccessoryImage = require('../../assets/left-accessory.png') as ImageSo
 const bottomSheetSnapPoints: Array<string | number> = ['27%'];
 const locale: Locale = getLocales()[0]?.languageCode === 'zh' ? 'zh' : 'en';
 
-type SpecialistListLoadingProps = {
+interface SpecialistListLoadingProps {
   label: string;
-};
+}
 
 function SpecialistListLoading({ label }: SpecialistListLoadingProps) {
   return (
@@ -43,6 +44,10 @@ function SpecialistListLoading({ label }: SpecialistListLoadingProps) {
 export function PremiumConsultationScreen() {
   const specialistsQuery = useSpecialists();
   const copy = translations[locale].premiumConsultation;
+  const contactCopy: ContactCopy =
+    'descriptionPrefix' in copy.contact
+      ? { variant: 'zh', ...copy.contact }
+      : { variant: 'en', ...copy.contact };
 
   const specialists = specialistsQuery.data ?? [];
 
@@ -120,7 +125,7 @@ export function PremiumConsultationScreen() {
     <SpecialistListLoading label={copy.specialists.loading} />
   ) : specialistsQuery.isError ? (
     <SpecialistListError
-      locale={locale}
+      copy={copy.specialists}
       onRetry={() => {
         void specialistsQuery.refetch();
       }}
@@ -154,21 +159,11 @@ export function PremiumConsultationScreen() {
           }
           ListFooterComponent={
             <View>
-              <View style={styles.contactBlock}>
-                <Text style={styles.contactText}>{copy.contact.description}</Text>
-                <Text style={styles.contactText}>
-                  {copy.contact.hotlineLabel}{' '}
-                  <Text style={styles.linkText} onPress={handlePhonePress}>
-                    {copy.contact.hotline}
-                  </Text>
-                </Text>
-                <Text style={styles.contactText}>
-                  {copy.contact.emailLabel}{' '}
-                  <Text style={styles.linkText} onPress={handleEmailPress}>
-                    {copy.contact.email}
-                  </Text>
-                </Text>
-              </View>
+              <ContactBlock
+                contact={contactCopy}
+                onEmailPress={handleEmailPress}
+                onPhonePress={handlePhonePress}
+              />
 
               <View style={styles.agreementBox}>
                 <View style={styles.infoIcon}>
@@ -275,17 +270,6 @@ const styles = StyleSheet.create({
     ...theme.typography.body,
     color: theme.colors.text.secondary,
     marginTop: theme.spacing.md,
-  },
-  contactBlock: {
-    marginTop: theme.spacing.section,
-  },
-  contactText: {
-    ...theme.typography.body,
-    color: theme.colors.text.secondary,
-  },
-  linkText: {
-    ...theme.typography.link,
-    color: theme.colors.link,
   },
   agreementBox: {
     flexDirection: 'row',

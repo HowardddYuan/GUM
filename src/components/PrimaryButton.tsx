@@ -1,10 +1,10 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { theme } from '../../theme';
 
-type PrimaryButtonProps = {
+interface PrimaryButtonProps {
   label: string;
   onPress?: () => void;
-};
+}
 
 export function PrimaryButton({ label, onPress }: PrimaryButtonProps) {
   return (

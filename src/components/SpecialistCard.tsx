@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { theme } from '../../theme';
 
-type SpecialistCardProps = {
+interface SpecialistCardProps {
   name: string;
-};
+}
 
 export function SpecialistCard({ name }: SpecialistCardProps) {
   return (

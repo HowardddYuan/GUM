@@ -1,9 +1,9 @@
 import { specialistMockConfig } from '../config/specialistMockConfig';
 
-export type Specialist = {
+export interface Specialist {
   id: string;
   name: string;
-};
+}
 
 export interface SpecialistRepository {
   listSpecialists(): Promise<Specialist[]>;
