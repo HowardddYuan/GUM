@@ -7,7 +7,6 @@ import {
   Alert,
   FlatList,
   Image,
-  ImageSourcePropType,
   Linking,
   StyleSheet,
   Text,
@@ -21,10 +20,10 @@ import { SpecialistListError } from '../components/SpecialistListError';
 import { getWhatsappUrl, links } from '../constants/links';
 import { useSpecialists } from '../hooks/useSpecialists';
 import { translations, type Locale } from '../shared/i18n/translation';
+import heroImage from '../../assets/hero.png';
+import leftAccessoryImage from '../../assets/left-accessory.png';
 import { theme } from '../../theme';
 
-const heroImage = require('../../assets/hero.png') as ImageSourcePropType;
-const leftAccessoryImage = require('../../assets/left-accessory.png') as ImageSourcePropType;
 const bottomSheetSnapPoints: Array<string | number> = ['27%'];
 const locale: Locale = getLocales()[0]?.languageCode === 'zh' ? 'zh' : 'en';
 
@@ -217,7 +216,7 @@ const styles = StyleSheet.create({
   },
   heroImage: {
     width: '100%',
-    height: theme.sizes.heroHeight,
+    aspectRatio: 1,
     resizeMode: 'cover',
   },
   backAccessory: {

@@ -22,6 +22,32 @@ npx expo start -c
 
 Then open the app with Expo Go, or press `i` / `a` in the Expo CLI to launch an iOS or Android simulator.
 
+## Screenshots
+
+### iOS - English
+
+<img src="./docs/screenshots/ios/premium-consultation-en.png" width="260" />
+
+<img src="./docs/screenshots/ios/premium-consultation-en-2.png" width="260" />
+
+### iOS - Chinese
+
+<img src="./docs/screenshots/ios/premium-consultation-zh.png" width="260" />
+
+<img src="./docs/screenshots/ios/premium-consultation-zh-2.png" width="260" />
+
+### Android - English
+
+<img src="./docs/screenshots/android/premium-consultation-en.png" width="260" />
+
+<img src="./docs/screenshots/android/premium-consultation-en-2.png" width="260" />
+
+### Android - Chinese
+
+<img src="./docs/screenshots/android/premium-consultation-zh.png" width="260" />
+
+<img src="./docs/screenshots/android/premium-consultation-zh-2.png" width="260" /> |
+
 ## Verification
 
 ```bash
